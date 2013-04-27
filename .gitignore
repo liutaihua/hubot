@@ -1,0 +1,6 @@
+node_modules/.bin
+node_modules/coffee-script
+node_modules/express
+node_modules/log
+node_modules/optparse
+node_modules/scoped-http-client
