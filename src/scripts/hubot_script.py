@@ -1,4 +1,12 @@
 #coding=utf8
+# Author:
+#   liutaihua <defage@gmail.com>
+# Modify:
+#   封装handlers的方式处理robot收到的消息
+#   handlers采用web的url正则方式做匹配
+#   handler分离到自己文件, 然后导入到handlers
+
+
 import json
 import re
 import sys

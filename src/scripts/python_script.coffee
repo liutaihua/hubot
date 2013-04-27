@@ -1,8 +1,15 @@
 # Description:
 #   A generic Hubot script that allows you to write Hubot scripts in Python.
+#   封装一个Python 类, 接收stdin, 输出stdout. 
+#   在nodejs里启动这个py类的listen监听stdin, robot收到消息时write到stdin, 
+#   py从stdin中读到消息, 交给指定的handler
+#   handler处理完成后, 输出stdout, 同时触发nodejs的event, 读取stdout通过robot发送回馈信息.
 #
 # Commands:
 #   hubot  sys  <Commands>    #执行一个系统命令
+#
+# Author:
+#   liutaihua <defage@gmail.com>
 
 class PythonScript
     
