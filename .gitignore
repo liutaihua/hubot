@@ -4,3 +4,5 @@ node_modules/express
 node_modules/log
 node_modules/optparse
 node_modules/scoped-http-client
+*.pyc
+nohup.out
