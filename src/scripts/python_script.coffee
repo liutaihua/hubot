@@ -33,7 +33,7 @@ class PythonScript
     send_to_python = (message, room, method) ->
         dict = 
             type : method,
-            message : message,
+            message : message.toLowerCase(),
             room : room
         python_script.stdin.write(JSON.stringify(dict) + '\n')
         console.log JSON.stringify(dict)
@@ -41,4 +41,4 @@ class PythonScript
     receive_from_python = (json) ->
         data = JSON.parse(json)
         #@robot.messageRoom data.room, data.message # 恶心的问题, data.room在send_to_python调用传的参数msg.message.room是undefined, 导致这里不能这样用
-        @robot.msg.send data.message   # 于是在入口的地方直接把msg对象赋给@robot里的, 在这里就能夸函数调用msg.send了.
+        return @robot.msg.send data.message   # 于是在入口的地方直接把msg对象赋给@robot里的, 在这里就能夸函数调用msg.send了.

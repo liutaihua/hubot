@@ -14,10 +14,13 @@ import time
 
 from handler.sys_handler import syscmdhandler 
 from handler.chat_handler import chathandler 
+from handler.tools_handler import weatherhandler 
 
 handlers = [
     (r'/hubot/sys/(.*)', syscmdhandler),
+    (r'/hubot/(hi)', chathandler),
     (r'/hubot/chat/(.*)', chathandler),
+    (r'/hubot/weather/(.*)', weatherhandler),
 ]
 
 class HubotScript:
