@@ -2,8 +2,7 @@
 #   Allows Hubot to know many languages.
 #
 # Commands:
-#   hubot translate me <phrase> - Searches for a translation for the <phrase> and then prints that bad boy out.
-#   hubot translate me from <source> into <target> <phrase> - Translates <phrase> from <source> into <target>. Both <source> and <target> are optional
+#   translate me <phrase> - google翻译哦,亲..
 
 languages =
   "af": "Afrikaans",
@@ -76,22 +75,28 @@ getCode = (language,languages) ->
       return code if lang.toLowerCase() is language.toLowerCase()
 
 module.exports = (robot) ->
-  robot.respond /(?:translate)(?: me)?(?:(?: from) ([a-z]*))?(?:(?: (?:in)?to) ([a-z]*))? (.*)/i, (msg) ->
-    term   = "\"#{msg.match[3]}\""
+  robot.respond /(?:translate)(?: me)? (.*)/i, (msg) ->
+    term   = "\"#{msg.match[1]}\""
     origin = if msg.match[1] isnt undefined then getCode(msg.match[1], languages) else 'auto'
-    target = if msg.match[2] isnt undefined then getCode(msg.match[2], languages) else 'en'
+    #target = if msg.match[2] isnt undefined then getCode(msg.match[2], languages) else 'en'
+    if msg.match[1].match(/[a-z]/i)
+        original_lang = 'en'
+        target = 'zh-CN'
+    else
+        original_lang = 'zh-CN'
+        target = 'en'
     
     msg.http("https://translate.google.com/translate_a/t")
       .query({
         client: 't'
-        hl: 'en'
+        hl: original_lang
         multires: 1
         sc: 1
         sl: origin
         ssel: 0
         tl: target
         tsel: 0
-        uptl: "en"
+        uptl: target
         text: term
       })
       .header('User-Agent', 'Mozilla/5.0')
@@ -103,7 +108,7 @@ module.exports = (robot) ->
           parsed = parsed[0] and parsed[0][0] and parsed[0][0][0]
           if parsed
             if msg.match[2] is undefined
-              msg.send "#{term} is #{language} for #{parsed}"
+              msg.send "#{term} is #{languages[target]} for #{parsed}"
             else
               msg.send "The #{language} #{term} translates as #{parsed} in #{languages[target]}"
 
