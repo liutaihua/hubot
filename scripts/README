@@ -1,0 +1,3 @@
+这个目录里的hubot scripts是自己扩展的.
+src/scripts目录里的脚本, 是hubot自带的.
+hubot启动时默认会读当前目录的 src/scripts 和scripts 这两个目录

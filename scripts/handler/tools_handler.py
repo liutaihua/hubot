@@ -25,6 +25,8 @@ def weatherhandler(obj, action):
 #    return res
     city_name = action
     city_code = yahoo_city_code_list.get(city_name)
+    if not city_code:
+        return "I can't understand your command. -_-"
     info = get_weather(city_code)
     current_info = info['forecasts'][0]
     tomorrow_info = info['forecasts'][1]

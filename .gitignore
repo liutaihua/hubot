@@ -5,5 +5,13 @@ node_modules/express
 node_modules/log
 node_modules/optparse
 node_modules/scoped-http-client
+node_modules/soupselect
+node_modules/htmlparser/
+node_modules/scraper/
+node_modules/tumblrbot/
+node_modules/underscore.string/
+node_modules/underscore/
+node_modules/xml2js/
 *.pyc
 nohup.out
+node_modules/hubot-gtalk/src/gtalk.coffee
