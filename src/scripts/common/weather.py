@@ -23,7 +23,7 @@ WEATHER_URL = 'http://xml.weather.yahoo.com/forecastrss?p=%s'
 METRIC_PARAMETER = '&u=c'
 WEATHER_NS = 'http://xml.weather.yahoo.com/ns/rss/1.0'
 
-def get_weather(location_code, options):
+def get_weather(location_code):
     """
     Fetches weather report from Yahoo!
 
@@ -38,8 +38,9 @@ def get_weather(location_code, options):
     # Get the correct weather url.
     url = WEATHER_URL % location_code
 
-    if options.metric:
-        url = url + METRIC_PARAMETER
+    #if options.metric:
+    #    url = url + METRIC_PARAMETER
+    url = url + METRIC_PARAMETER
 
     # Parse the XML feed.
     try:
@@ -63,7 +64,8 @@ def get_weather(location_code, options):
     for i, node in enumerate(dom.getElementsByTagNameNS(WEATHER_NS,'forecast')):
         
         # Stop if the number of obtained forecasts equals the number of requested days
-        if i >= options.forecast:
+        #if i >= options.forecast:
+        if i >= 2:
             break
         else:
             # Insert the forecast into the forcast dictionary.
@@ -88,7 +90,7 @@ def get_weather(location_code, options):
     
     return weather_data
 
-def create_report(weather_data, options):
+def create_report(weather_data, options=None):
     """
     Constructs a weather report as a string.
 
