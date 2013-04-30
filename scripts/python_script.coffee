@@ -30,6 +30,10 @@ class PythonScript
             send_to_python(msg.message.text, msg.message.room, 'hear')
             @robot.msg = msg
 
+        robot.router.get "/hubot/get/(?:.*)", (req, res) ->
+            console.log req.route.path
+            res.send 'success'
+
     send_to_python = (message, room, method) ->
         dict = 
             type : method,

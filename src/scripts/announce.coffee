@@ -25,12 +25,17 @@ module.exports = (robot) ->
   else
     allRooms = []
 
-  robot.respond /announce "(.*)"/i, (msg) ->
+  robot.respond /announce (.*)/i, (msg) ->
     announcement = msg.match[1]
-    for room in allRooms
-      robot.messageRoom room, announcement
+    for own key, user of robot.brain.data.users
+      user_info = { user: user } # 总之, 为了后面robot和adapter的send方法调用, 多包一层, 否则send取user会取成undefined
+      robot.send user_info, announcement
+    
+    #for room in allRooms
+    #  robot.messageRoom room, announcement
+    #  #robot.messageRoom 'defage', announcement
 
-  robot.respond /announce downtime for "(.*)" starting (.*)/i, (msg) ->
+  robot.respond /announce downtime for (.*) starting (.*)/i, (msg) ->
     user = msg.message.user
     service = msg.match[1]
     startTime = msg.match[2]
@@ -38,23 +43,33 @@ module.exports = (robot) ->
     message = ["The '#{service}' service will be going down for maintenance starting #{startTime}.",
       "If you have questions about this maintenance, please talk to #{user.name} in the the #{user.room} room.  Thank you for your patience."]
 
-    for room in allRooms
-      robot.messageRoom room, message...
+    #for room in allRooms
+    #  robot.messageRoom room, message...
+    for own key, user of robot.brain.data.users
+      user_info = { user: user } # 总之, 为了后面robot和adapter的send方法调用, 多包一层, 否则send取user会取成undefined
+      robot.send user_info, message
     msg.reply "Don't forget to pause monitoring for this service."
 
   robot.respond /announce downtime complete for "(.*)"/i, (msg) ->
     service = msg.match[1]
-    for room in allRooms
-      robot.messageRoom room, 
-          "Maintenance for the '#{service}' service is complete."
+    #for room in allRooms
+    #  robot.messageRoom room, 
+    #      "Maintenance for the '#{service}' service is complete."
+    for own key, user of robot.brain.data.users
+      user_info = { user: user } # 总之, 为了后面robot和adapter的send方法调用, 多包一层, 否则send取user会取成undefined
+      robot.send user_info, service
     msg.reply "Don't forget to resume monitoring for this service."
 
   robot.router.post "/broadcast/create", (req, res) ->
-    if req.body.rooms
-      rooms = req.body.rooms.split(',')
-    else
-      rooms = allRooms
-
-    for room in rooms
-      robot.messageRoom room, req.body.message
+    for own key, user of robot.brain.data.users
+      user_info = { user: user } # 总之, 为了后面robot和adapter的send方法调用, 多包一层, 否则send取user会取成undefined
+      robot.send user_info, req.body.message
     res.end "Message Sent"
+    #if req.body.rooms
+    #  rooms = req.body.rooms.split(',')
+    #else
+    #  rooms = allRooms
+
+    #for room in rooms
+    #  robot.messageRoom room, req.body.message
+    #res.end "Message Sent"
