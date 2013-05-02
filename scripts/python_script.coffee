@@ -10,9 +10,12 @@
 #
 # Author:
 #   liutaihua <defage@gmail.com>
+#
+
+ADMIN_LIST = new Array('defage@gmail.com')
+
 
 class PythonScript
-    
     pyScriptPath = __dirname + '/test.py'
     python_script = require('child_process').spawn('python', [pyScriptPath])
     python_script.stdout.on 'data', (data) =>
@@ -27,6 +30,10 @@ class PythonScript
         #    @robot.msg = msg
 
         robot.hear /(.*)/i, (msg) ->
+            reSys = new RegExp('sys .*')
+            if msg.message.user.id not in ADMIN_LIST and reSys.test(msg.match[1]) # 执行sys 系统命令的只能管理员
+               msg.send "forbidden"
+               return
             send_to_python(msg.message.text, msg.message.room, 'hear')
             @robot.msg = msg
 
