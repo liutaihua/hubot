@@ -10,7 +10,7 @@ from common.weather import get_weather
 #weather_api2 = 'http://www.weather.com.cn/data/cityinfo/%d.html'
 #city_code_list = json.loads(city_code_list)
 
-def weatherhandler(obj, action):
+def weatherhandler(obj, action, args_list):
 #    city_cname = action
 #    city_code = city_code_list.get(city_cname)
 #    if not city_code:

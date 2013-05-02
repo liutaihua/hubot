@@ -1,6 +1,6 @@
 
-def chathandler(self, action):
-    if action == 'hi' or ' hi' in action:
+def chathandler(self, action, args_list):
+    if action == 'hi':
         res = '''
         How are you doing, lady?
         I'm Blabla.LTH robot 

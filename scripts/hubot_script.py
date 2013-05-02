@@ -63,10 +63,11 @@ class HubotScript:
         for regex, handler in regexes:
             p = re.match(regex, message['message'])
             if p:
-                action = ' '.join(p.groups()[0].split('/'))
+                #action = ' '.join(p.groups()[0].split('/'))
+                action = p.groups()[0].split('/')[0]
+                args_list = p.groups()[0].split('/')[1:]
                 response = message
-                #response_text = handler(self, message)
-                response_text = handler(self, action)
+                response_text = handler(self, action, args_list)
                 if response_text:
                     if len(response_text) > 3000: # nodejs的JSON.parse不能处理太长的str
                         response_text = response_text[:3000]
