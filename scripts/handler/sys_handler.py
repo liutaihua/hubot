@@ -9,7 +9,7 @@ def syscmdhandler(obj, action, args_list):
     if action in forbidden_list:
         return 'forbidden exec command: ' + action
     if action == 'deploy':
-        pass
+        return 'This feature in coding now.'
 
     else:
         cmd = action if not args_list else action + ' ' + ' '.join(args_list)
