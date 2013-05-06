@@ -34,6 +34,9 @@
 # Author:
 #   gregmac
 
+process.env.HUBOT_TRAC_URL = 'http://172.16.8.106:8000/terminus'
+process.env.HUBOT_TRAC_USER = 'liutaihua'
+process.env.HUBOT_TRAC_PASSWORD = 'liutaihua'
 
 jsdom = require 'jsdom'
 #fs = require 'fs'  #todo: load jquery from filesystem

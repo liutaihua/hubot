@@ -20,7 +20,7 @@ handlers = [
     (r'/hubot/sys/(.*)', syscmdhandler),
     (r'/hubot/(cal)', syscmdhandler),
     (r'/hubot/(date)', syscmdhandler),
-#    (r'/hubot/(hi)', chathandler),
+    (r'/hubot/(hi|hello|你好)', chathandler),
     (r'/hubot/chat/(.*)', chathandler),
     (r'/hubot/weather/(.*)', weatherhandler),
 ]
