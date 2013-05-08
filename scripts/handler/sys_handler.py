@@ -9,7 +9,7 @@ from common.util import announce
 from fabfile.deploy import deploy
 from fabfile.deploy import deploy_by_rsync
 
-forbidden_list = ['shutdown', 'halt', 'rm', 'stop']
+forbidden_list = ['shutdown', 'halt', 'rm', 'stop', 'passwd', 'iptables']
 def syscmdhandler(obj, action, args_list):
     #log('something here')
     if action in forbidden_list:

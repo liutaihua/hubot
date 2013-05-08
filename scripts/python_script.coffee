@@ -14,6 +14,11 @@
 
 ADMIN_LIST = new Array('defage@gmail.com')
 
+is_admin_user = (userid) ->
+  if userid in ADMIN_LIST
+    return true
+  else
+    return false
 
 class PythonScript
     pyScriptPath = __dirname + '/test.py'
@@ -31,7 +36,7 @@ class PythonScript
 
         robot.hear /(.*)/i, (msg) ->
             reSys = new RegExp('sys .*')
-            if msg.message.user.id not in ADMIN_LIST and reSys.test(msg.match[1]) # 执行sys 系统命令的只能管理员
+            if not is_admin_user(msg.message.user.id) and reSys.test(msg.match[1]) # 执行sys 系统命令的只能管理员
                msg.send "forbidden"
                return
             send_to_python(msg.message.text, msg.message.room, 'hear')
