@@ -6,8 +6,8 @@ sys.path.append('../')
 from common.util import log
 from common.util import announce
 
-from fabfile.deploy import deploy
-from fabfile.deploy import deploy_by_rsync
+#from fabfile.deploy import deploy
+#from fabfile.deploy import deploy_by_rsync
 
 forbidden_list = ['shutdown', 'halt', 'rm', 'stop', 'passwd', 'iptables']
 def syscmdhandler(obj, action, args_list):
