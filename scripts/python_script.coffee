@@ -37,8 +37,8 @@ class PythonScript
         robot.hear /(.*)/i, (msg) ->
             reSys = new RegExp('sys .*')
             if not is_admin_user(msg.message.user.id) and reSys.test(msg.match[1]) # 执行sys 系统命令的只能管理员
-               msg.send "forbidden"
-               return
+                msg.send "forbidden"
+                return
             send_to_python(msg.message.text, msg.message.room, 'hear')
             @robot.msg = msg
 
@@ -56,5 +56,6 @@ class PythonScript
 
     receive_from_python = (json) ->
         data = JSON.parse(json)
+        console.log data.message
         #@robot.messageRoom data.room, data.message # 恶心的问题, data.room在send_to_python调用传的参数msg.message.room是undefined, 导致这里不能这样用
         return @robot.msg.send data.message   # 于是在入口的地方直接把msg对象赋给@robot里的, 在这里就能夸函数调用msg.send了.

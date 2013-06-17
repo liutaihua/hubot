@@ -17,3 +17,4 @@ node_modules/hubot/
 *.pyc
 nohup.out
 node_modules/hubot-gtalk/src/gtalk.coffee
+*.un~
