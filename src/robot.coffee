@@ -38,8 +38,8 @@ class Robot
   # Returns nothing.
   constructor: (adapterPath, adapter, httpd, name = 'Hubot') ->
     @name      = name
-    @brain     = new Brain
     @events    = new EventEmitter
+    @brain     = new Brain @
     @alias     = false
     @adapter   = null
     @Response  = Response
@@ -80,16 +80,17 @@ class Robot
       @logger.warning "The regex in question was #{regex.toString()}"
 
     pattern = re.join('/')
+    name = @name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 
     if @alias
       alias = @alias.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
       newRegex = new RegExp(
-        "^[@]?(?:#{alias}[:,]?|#{@name}[:,]?)\\s*(?:#{pattern})"
+        "^[@]?(?:#{alias}[:,]?|#{name}[:,]?)\\s*(?:#{pattern})"
         modifiers
       )
     else
       newRegex = new RegExp(
-        "^[@]?#{@name}[:,]?\\s*(?:#{pattern})",
+        "^[@]?#{name}[:,]?\\s*(?:#{pattern})",
         modifiers
       )
 
@@ -212,6 +213,7 @@ class Robot
     for pkg in packages
       try
         require(pkg) @
+        @parseHelp require.resolve(pkg)
       catch error
         @logger.error "Error loading scripts from npm package - #{error}"
         process.exit(1)
@@ -367,6 +369,7 @@ class Robot
   #
   # Returns nothing.
   run: ->
+    @emit "running"
     @adapter.run()
 
   # Public: Gracefully shutdown the robot process
@@ -415,5 +418,6 @@ class Robot
   # Returns a ScopedClient instance.
   http: (url) ->
     HttpClient.create(url)
+      .header('User-Agent', "Hubot/#{@version}")
 
 module.exports = Robot
