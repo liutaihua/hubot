@@ -20,5 +20,6 @@ module.exports = (robot) ->
 
   robot.respond /c (.*)/i, (msg) ->
     data = msg.match[1].trim()
+    
+    c.write(data, (c) => console.log(c.message))
     c.write(data, (c) => msg.send(c.message.replace('Cleverbot', 'Einstein')))
-

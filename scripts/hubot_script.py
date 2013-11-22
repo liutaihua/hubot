@@ -15,8 +15,10 @@ import time
 from handler.sys_handler import syscmdhandler 
 from handler.chat_handler import chathandler 
 from handler.tools_handler import weatherhandler 
+from handler.deploy_handler import deployhandler
 
 handlers = [
+    (r'/hubot/deploy/(.*)', deployhandler),
     (r'/hubot/sys/(.*)', syscmdhandler),
     (r'/hubot/(cal)', syscmdhandler),
     (r'/hubot/(date)', syscmdhandler),
@@ -43,6 +45,8 @@ class HubotScript:
             self.dispatch(json_dict)
         except Exception, e:
             print e
+            with open('/tmp/hubot_error.log', 'w') as f:
+                f.write('receive error ............:%s'%e)
             
     def send(self, message):
         if message:
@@ -73,6 +77,11 @@ class HubotScript:
                         response_text = response_text[:3000]
                     response['message'] = response_text
                     self.send(response)
+                    break
+        #else:
+        #    response = message
+        #    response['message'] = "I'm sorry, i can't understand what your mean.(Input 'help' get helpinfo)"
+        #    self.send(response)
 
     def no_handler(self, message):
         pass

@@ -53,6 +53,8 @@ class PythonScript
             room : room
         python_script.stdin.write(JSON.stringify(dict) + '\n')
         console.log JSON.stringify(dict)
+        #if not data.message
+        #    return @robot.msg.send 'suck your word !'
 
     receive_from_python = (json) ->
         data = JSON.parse(json)
